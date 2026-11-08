@@ -26,6 +26,7 @@ wasm-opt dist/app_bg.wasm -Oz --all-features -o dist/app_bg.wasm
 brotli -q 11 dist/app_bg.wasm
 ```
 
+- 숫자와 포인터만 주고받는 작은 모듈은 `wasm-bindgen` 없이 `no_std`로 직접 export해도 된다. `wasm-opt`가 없으면 그 단계를 건너뛰고 건너뛴 사실을 보고서에 적는다.
 - `opt-level`은 `"s"`, `"z"`, `3`을 빌드해서 Brotli 압축 후 크기와 실행 시간을 비교해 정한다. 계산이 핵심인 모듈은 `3`과 `wasm-opt -O3`가 유리할 수 있다.
 - SIMD가 효과 있는 연산은 `RUSTFLAGS="-C target-feature=+simd128"`로 비교한다. 구형 브라우저까지 지원한다면 비SIMD 빌드를 따로 둔다.
 - `format!`, `serde`, 큰 제네릭 인스턴스, 정규식 라이브러리가 흔한 용량 원인이다.
